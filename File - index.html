@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inspirational Quotes</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        /* Header Styling */
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        /* Navigation Links */
+        nav a {
+            text-decoration: none;
+            color: #3498db;
+            margin: 0 10px;
+        }
+
+        nav a:hover {
+            color: #e74c3c;
+        }
+
+        /* Quote Styling */
+        blockquote {
+            background: #fff;
+            border-left: 5px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            font-style: italic;
+        }
+
+        blockquote footer {
+            font-style: normal;
+            font-weight: bold;
+            color: #7f8c8d;
+            margin-top: 10px;
+        }
+
+        /* Footer Styling */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #7f8c8d;
+        }
+
+        /* Fancy Quote */
+        .fancy-quote {
+            position: relative;
+            padding: 30px;
+            background: linear-gradient(135deg, #6e8efb, #f6e97b);
+            color: white;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+
+        .fancy-quote::before {
+            content: '"';
+            font-size: 80px;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            opacity: 0.2;
+        }
+
+        .fancy-quote footer {
+            text-align: right;
+            font-weight: bold;
+            margin-top: 15px;
+            color: white;
+        }
+
+        /* Dark Mode */
+        :root {
+            --bg-color: #f9f9f9;
+            --text-color: #333;
+            --quote-bg: #fff;
+        }
+
+        .dark-mode {
+            --bg-color: #1a1a1a;
+            --text-color: #f0f0f0;
+            --quote-bg: #2d2d2d;
+        }
+
+        body {
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        blockquote {
+            background: var(--quote-bg);
+        }
+
+        /* Toggle Button */
+        .theme-toggle {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 10px;
+        }
+
+        /* Share Buttons */
+        .share-buttons {
+            margin-top: 15px;
+        }
+        
+        .share-buttons button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            margin-right: 5px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        /* Animation for quotes */
+blockquote, .fancy-quote, .quote-card {
+    animation: fadeIn 0.8s ease-out;
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Delay animations for sequential loading */
+blockquote:nth-child(1) { animation-delay: 0.1s; }
+blockquote:nth-child(2) { animation-delay: 0.3s; }
+blockquote:nth-child(3) { animation-delay: 0.5s; }
+/* Add to existing button styles */
+button, .share-buttons button {
+    transition: all 0.3s ease;
+}
+
+button:hover, .share-buttons button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+#random-quote-btn:hover {
+    background: #f6e97b;
+    color: #2c3e50;
+}
+
+.theme-toggle:hover {
+    background: #e74c3c;
+}
+.share-buttons button {
+    transform: scale(0.95);
+}
+
+.share-buttons button:active {
+    transform: scale(0.9);
+}
+
+/* Twitter button pulse */
+button[onclick*="shareTwitter"]:hover {
+    animation: pulseBlue 1.5s infinite;
+}
+
+@keyframes pulseBlue {
+    0% { background: #3498db; }
+    50% { background: #1da1f2; }
+    100% { background: #3498db; }
+}
+/* Floating Hearts Animation */
+@keyframes floatHeart {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) rotate(20deg);
+    opacity: 0;
+  }
+}
+
+.heart {
+  position: absolute;
+  pointer-events: none;
+  font-size: 20px;
+  animation: floatHeart 1.5s ease-out forwards;
+  color: #ff3366;
+  z-index: 1000;
+}
+.share-buttons button:nth-child(2) { /* Targets WhatsApp specifically */
+  background: #25D366 !important; /* WhatsApp green */
+}
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>🌟 Quote Website</h1>
+        <nav>
+            <a href="index.html">Home</a> |
+            <a href="categories.html">Categories</a> |
+            <a href="about.html">About</a>
+        </nav>
+        <button class="theme-toggle" onclick="document.body.classList.toggle('dark-mode')">
+            🌙 Dark Mode
+        </button>
+        <input type="text" id="search-input" placeholder="Search quotes...">
+        <button id="search-btn">🔍 Search</button>
+        <div id="search-results"></div>
+        <button id="random-quote-btn">✨ Get Random Quote</button>
+        <div id="quote-display"></div>
+    </header>
+
+    <main>
+        <section>
+            <h2>Top Quotes</h2>
+            <article>
+                <blockquote>
+                    "The greatest glory in living lies not in never falling, but in rising every time we fall."  
+                    <footer>— Nelson Mandela</footer>
+                    <div class="share-buttons">
+                        <button onclick="shareTwitter('The greatest glory in living lies not in never falling, but in rising every time we fall.', 'Nelson Mandela')">🐦 Twitter</button>
+                        <button onclick="copyToClipboard('The greatest glory in living lies not in never falling, but in rising every time we fall. — Nelson Mandela')">📋 Copy</button>
+                    </div>
+                </blockquote>
+            </article>
+        </section>
+        
+        <section>
+            <h2>Featured Quotes</h2>
+            <div class="quote-container">
+                <div class="quote-card">
+                    <blockquote>
+                        "The only limit to our realization of tomorrow is our doubts of today."
+                        <footer>— Franklin D. Roosevelt</footer>
+                        <div class="share-buttons">
+                            <button onclick="shareTwitter('The only limit to our realization of tomorrow is our doubts of today.', 'Franklin D. Roosevelt')">🐦 Twitter</button>
+                            <button onclick="copyToClipboard('The only limit to our realization of tomorrow is our doubts of today. — Franklin D. Roosevelt')">📋 Copy</button>
+                        </div>
+                    </blockquote>
+                </div>
+            </div>
+            
+            <div class="fancy-quote">
+                "Success is not final, failure is not fatal: It is the courage to continue that counts."
+                <footer>— Winston Churchill</footer>
+            </div>
+            
+            <div class="fancy-quote">
+                "I love you with my brain 🧠"
+                <footer>- Me</footer>   
+            </div>
+            
+            <article>
+                <h3>Quote of the Day</h3>
+                <p>"Life is what happens when you're busy making other plans." — John Lennon</p>
+            </article>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Your Quote Site. All rights reserved.</p>
+    </footer>
+<p>You're visitor number <span id="counter">0</span>! Thanks for being awesome 😊</p>
+<script>localStorage.visits = (localStorage.visits || 0) * 1 + 1; document.getElementById('counter').textContent = localStorage.visits;</script>
+    <script>
+        const quotes = [
+            { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
+            { text: "Life is what happens when you're busy making other plans.", author: "John Lennon" },
+            { text: "Be yourself; everyone else is already taken.", author: "Oscar Wilde" },
+            { text: "The greatest glory in living lies not in never falling, but in rising every time we fall.", author: "Nelson Mandela" },
+            { text: "The only limit to our realization of tomorrow is our doubts of today.", author: "Franklin D. Roosevelt" },
+            { text: "Success is not final, failure is not fatal: It is the courage to continue that counts.", author: "Winston Churchill" }
+        ];
+
+        // Random Quote Generator
+        document.getElementById("random-quote-btn").addEventListener("click", () => {
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            const quote = quotes[randomIndex];
+            document.getElementById("quote-display").innerHTML = `
+                <blockquote>
+                    "${quote.text}"
+                    <footer>— ${quote.author}</footer>
+                    <div class="share-buttons">
+                        <button onclick="shareTwitter('${quote.text}', '${quote.author}')">🐦 Twitter</button>
+                        <button onclick="copyToClipboard('${quote.text} — ${quote.author}')">📋 Copy</button>                   
+                    </div>
+                </blockquote>
+            `;
+        });
+
+        // Search Functionality
+        document.getElementById("search-btn").addEventListener("click", () => {
+            const searchTerm = document.getElementById("search-input").value.toLowerCase();
+            const results = quotes.filter(quote => 
+                quote.text.toLowerCase().includes(searchTerm) || 
+                quote.author.toLowerCase().includes(searchTerm)
+            );
+            
+            const resultsHTML = results.map(quote => `
+                <blockquote>
+                    "${quote.text}"
+                    <footer>— ${quote.author}</footer>
+                    <div class="share-buttons">
+                        <button onclick="shareTwitter('${quote.text}', '${quote.author}')">🐦 Twitter</button>
+                        <button onclick="copyToClipboard('${quote.text} — ${quote.author}')">📋 Copy</button>
+                    </div>
+                </blockquote>
+            `).join("");
+
+            document.getElementById("search-results").innerHTML = resultsHTML || "No quotes found.";
+        });
+
+        // Share Functions
+        function shareTwitter(text, author) {
+            const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(`"${text}" — ${author}`)}`;
+            window.open(url, "_blank");
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text);
+            alert("Copied to clipboard!");
+        }
+        // Floating Hearts Creator
+function createHeart(event) {
+  const heart = document.createElement('div');
+  heart.className = 'heart';
+  heart.innerHTML = '❤️';
+  
+  // Position at click location
+  heart.style.left = `${event.clientX - 10}px`;
+  heart.style.top = `${event.clientY - 10}px`;
+  
+  document.body.appendChild(heart);
+  
+  // Remove after animation
+  setTimeout(() => heart.remove(), 1500);
+}
+
+// Add to all share buttons
+document.querySelectorAll('.share-buttons button').forEach(button => {
+  button.addEventListener('click', createHeart);
+});
+document.querySelectorAll('blockquote').forEach(quote => {
+  quote.addEventListener('mouseenter', (e) => {
+    if(Math.random() > 0.7) { // 30% chance on hover
+      createHeart({
+        clientX: e.clientX,
+        clientY: e.clientY
+      });
+    }
+  });
+});
+
+        
+    </script>
+</body>
+</html>
